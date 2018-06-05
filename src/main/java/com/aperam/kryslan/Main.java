@@ -19,7 +19,5 @@ public class Main {
         for (String documento: nomeDosDocumentos) {
             System.out.println(documento);
         }
-
-
     }
 }
