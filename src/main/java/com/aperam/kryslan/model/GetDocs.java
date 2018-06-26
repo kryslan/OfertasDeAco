@@ -1,14 +1,11 @@
-package com.aperam.kryslan.work;
+package com.aperam.kryslan.model;
 
 import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FilenameFilter;
-import java.io.IOException;
+import java.io.*;
 
-public class GetInformacoesDocumento {
+public class GetDocs {
 
     public String[] PegarNomeDosArquivos(final File pasta){
         File[] arquivos = pasta.listFiles(new FilenameFilter() {
@@ -25,7 +22,7 @@ public class GetInformacoesDocumento {
             for (int i=0; i<arquivos.length; i++) {
                 if (arquivos[i].isFile()) {
                     if (!arquivos[i].isHidden()) {
-                        nomeDosArquivos[i] = arquivos[i].getName();
+                        nomeDosArquivos[i] = arquivos[i].getName();  //Pega nome dos arquivos.
                     }
                 }
             }
@@ -37,18 +34,20 @@ public class GetInformacoesDocumento {
     }
 
     public XWPFWordExtractor[] pegarDocumentos(String[] nomeDosDocumentos){
-        XWPFDocument docx = null;  //Objeto que controla o documento.
+        XWPFDocument docs = null;  //Objeto que controla o documento.
         int qtdDocumentos = nomeDosDocumentos.length;
 
         XWPFWordExtractor[] corpoDoDocumento = new XWPFWordExtractor[qtdDocumentos];  //Informações do documento.
         for(int i=0; i<qtdDocumentos; i++) {
             try {
-                docx = new XWPFDocument(new FileInputStream(nomeDosDocumentos[i]));
+                docs = new XWPFDocument(new FileInputStream(nomeDosDocumentos[i]));
             } catch (IOException e) {
                 e.printStackTrace();  //TRATAR DEPOIS.
             }
-            corpoDoDocumento[i] = new XWPFWordExtractor(docx);
+            corpoDoDocumento[i] = new XWPFWordExtractor(docs);
         }
         return corpoDoDocumento;
     }
+
+
 }
